@@ -3,5 +3,9 @@ pandas
 torch
 transformers
 accelerate
+evaluate
+rouge_score
+bert_score
 tqdm
 wandb
+google-cloud-aiplatform>=1.38

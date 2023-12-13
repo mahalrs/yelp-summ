@@ -45,7 +45,7 @@ For experimentation, let's create a mini-dataset.
 ```sh
 cd src
 
-python make_dataset.py --data_file ./data/processed_dataset.json --out_dir ./data
+python make_dataset.py --data_file ./data/processed_dataset.json --out_dir ./data --out_file mini_dataset.json --num_businesses 10000 --max_reviews_per_business 8
 ```
 
 ## Download Test Dataset
@@ -74,4 +74,36 @@ Now process the downloaded test dataset. This includes merging train/val/test sp
 cd src
 
 python process_eval_dataset.py --data_root ./data/gold_summs --out_dir ./data
+```
+
+## Dataset Generation using PaLM 2 API
+
+We condcuted mutliple experiments to evaluate our methods to generate data using PaLM 2 API. The experiments are as follows:
+
+- `gen_data_exp1.py`: Simple prompt to generate data.
+- `gen_data_exp2.py`: 2-step approach; first generate positive and negative summaries and then aggregate.
+- `gen_data_exp3.py`: First generate business attributes and then use these attributes to generate summary focused on these top attributes.
+
+These experiments are conducted on `eval_dataset` which contains human-written summaries.
+
+To run each experiment:
+
+```sh
+# NOTE: Make sure you use GCP VM and have Vertex AI API enabled.
+python gen_data_exp1.py --data_file ./data/eval_dataset.json --gcp_project my_project --gcp_region us-central1
+```
+
+To evaluate the generated data, run:
+
+```sh
+python evaluate_gen_data.py --data_file ./data/gen_dataset_exp1.json
+```
+
+### Generate dataset for training
+
+Based on our experiemnts, attribute-based approach resulted in best generated summaries. So, to generate dataset for training models, run:
+
+```sh
+# NOTE: If you get quota errors, request higher quota for the PaLM API requests.
+python generate_data.py --data_file ./data/mini_dataset.json
 ```
