@@ -1,6 +1,6 @@
-# Aspect-Oriented Opinion Summarization of Yelp Reviews
+# Opinion Summarization of Yelp Reviews
 
-This repository contains source code for various experiments to explore the feasibility of using business aspects to generate review summaries.
+This repository contains source code for various experiments to explore the feasibility of using a small, high-quality synthetic dataset, generated using a large language model such as PaLM 2, to fine-tune much smaller model to generate high-quality summaries.
 
 ## Install dependencies
 
@@ -78,7 +78,7 @@ python process_eval_dataset.py --data_root ./data/gold_summs --out_dir ./data
 
 ## Dataset Generation using PaLM 2 API
 
-We condcuted mutliple experiments to evaluate our methods to generate data using PaLM 2 API. The experiments are as follows:
+We conducted multiple experiments to evaluate our methods to generate data using PaLM 2 API. The experiments are as follows:
 
 - `gen_data_exp1.py`: Simple prompt to generate data.
 - `gen_data_exp2.py`: 2-step approach; first generate positive and negative summaries and then aggregate.
